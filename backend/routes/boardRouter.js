@@ -1,4 +1,5 @@
 const express = require("express");
+const knex = require("../config/knex");
 const router = express.Router();
 const {
   queryAsync,
@@ -112,7 +113,7 @@ router.post("/posts", async (req, res) => {
   }
 
   try {
-    await create(table, data);
+    await knex(table).insert(data);
     res
       .status(200)
       .json(successResponse({}, "게시물이 성공적으로 작성되었습니다"));
@@ -221,7 +222,7 @@ router.get("/posts", async (req, res) => {
   const conditions = { is_deleted: false };
   const orderBy = "publish_date DESC";
   try {
-    const result = await read(table, columns, conditions, orderBy);
+    const result = await knex.select(columns).from(table).where(conditions).orderBy("publish_date", "DESC");
     if (result.length === 0) {
       return res
         .status(404)
@@ -336,22 +337,25 @@ router.get("/posts/:board_id", async (req, res) => {
     if (!board_id) {
       return res.status(400).json(clientErrorResponse("게시물 ID가 없습니다."));
     }
-    // 조회수 증가(views + 1 이 문자로 처리가 되는 이슈가 있어 커스텀 쿼리문을 작성하여 처리)
-    const incrementViewsSql = `UPDATE ${table} SET views = views + 1 WHERE board_id = ?`;
-    const incrementResult = await queryAsync(incrementViewsSql, [board_id]);
-    if (incrementResult.affectedRows === 0) {
+    
+    const incrementResult = await knex(table).increment('views',1).where('board_id',board_id);
+
+    if (incrementResult === 0) {
       return res
         .status(404)
         .json(dataNotFoundErrorResponse("해당 게시물이 없습니다."));
     }
 
     // 게시물 상세 정보 조회
-    const post = await read(table, columns, conditions);
+    const post = await knex.select(columns).from(table).where("board_id",board_id);
+
     if (post.length === 0) {
       return res
         .status(404)
         .json(dataNotFoundErrorResponse("해당 게시물이 없습니다."));
     }
+
+    console.log(post[0]);
 
     res.status(200).json(successResponse(post[0], "게시물 상세 조회 성공"));
   } catch (error) {
@@ -457,8 +461,8 @@ router.patch("/posts", async (req, res) => {
   }
 
   try {
-    const result = await update(table, data, conditions);
-    if (result.affectedRows === 0) {
+    const result = await knex(table).update(data).where("board_id",board_id);
+    if (result === 0) {
       return res
         .status(404)
         .json(dataNotFoundErrorResponse("해당 게시물이 없습니다."));
@@ -559,8 +563,9 @@ router.delete("/posts", async (req, res) => {
     const data = { is_deleted: true };
     const conditions = { board_id: board_ids };
 
-    const result = await update(table, data, conditions);
-    if (result.affectedRows === 0) {
+    const result = await knex(table).update(data).whereIn("board_id",board_ids);
+
+    if (result === 0) {
       return res
         .status(404)
         .json(dataNotFoundErrorResponse("해당 게시물이 없습니다."));
@@ -682,7 +687,14 @@ router.post("/comments", async (req, res) => {
   const conditions = { board_id, is_deleted: false };
   try {
     // 게시물이 존재하는지 확인
-    const articleExists = await read(table, columns, conditions);
+    const articleExists = await knex
+      .select(columns)
+      .from(table)
+      .where({
+        board_id:board_id, 
+        is_deleted:false
+      });
+
     if (articleExists.length === 0) {
       return res
         .status(404)
@@ -699,7 +711,7 @@ router.post("/comments", async (req, res) => {
       is_deleted: false,
     };
 
-    await create(table, data);
+    await knex(table).insert(data);
     return res
       .status(200)
       .json(successResponse({}, "댓글이 성공적으로 작성되었습니다"));
@@ -789,15 +801,16 @@ router.get("/comments/:board_id", async (req, res) => {
   const table = "comment";
   const columns = "*";
   const conditions = { board_id, is_deleted: false };
-  const orderBy = "publish_date DESC";
 
   try {
-    const result = await read(table, columns, conditions, orderBy);
-    if (result.length === 0) {
-      return res
-        .status(404)
-        .json(dataNotFoundErrorResponse("해당 게시물의 댓글이 없습니다."));
-    }
+    const result = await knex.select(columns).from(table).where(conditions).orderBy("publish_date","DESC");
+
+    // if (result.length === 0) {
+    //   return res
+    //     .status(404)
+    //     .json(dataNotFoundErrorResponse("해당 게시물의 댓글이 없습니다."));
+    // }
+
     res.status(200).json(successResponse(result, "게시물 댓글 조회 성공"));
   } catch (error) {
     console.log(error);
@@ -902,14 +915,14 @@ router.patch("/comments", async (req, res) => {
   const conditions = { board_id };
 
   try {
-    const articleExists = await read(table, columns, conditions);
+    const articleExists = await knex.select(columns).from(table).where("board_id",board_id);
     if (articleExists.length === 0) {
       return res.status.json(
         dataNotFoundErrorResponse("해당 게시물이 존재하지 않습니다.")
       );
     }
-    const result = await update(table, data, conditions);
-    if (result.affectedRows === 0) {
+    const result = await knex(table).update(data).where("board_id",board_id);
+    if (result === 0) {
       return res
         .status(404)
         .json(dataNotFoundErrorResponse("해당 댓글이 없습니다."));
