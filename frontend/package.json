@@ -1,0 +1,36 @@
+{
+  "name": "frontend",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@emotion/cache": "^11.14.0",
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
+    "@mui/icons-material": "^6.4.0",
+    "@mui/material": "^6.4.0",
+    "@mui/material-nextjs": "^6.3.1",
+    "@mui/x-charts": "^7.23.6",
+    "@mui/x-data-grid": "^7.23.6",
+    "@mui/x-date-pickers": "^7.23.6",
+    "@mui/x-tree-view": "^7.23.6",
+    "axios": "^1.7.9",
+    "dayjs": "^1.11.13",
+    "next": "14.2.23",
+    "react": "^18",
+    "react-dom": "^18"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "eslint": "^8",
+    "eslint-config-next": "14.2.23",
+    "typescript": "^5"
+  }
+}
