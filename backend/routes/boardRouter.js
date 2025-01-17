@@ -151,8 +151,6 @@ router.post("/posts", async (req, res) => {
  *                         type: integer
  *                       title:
  *                         type: string
- *                       contents:
- *                         type: string
  *                       views:
  *                         type: integer
  *                       is_deleted:
@@ -222,7 +220,11 @@ router.get("/posts", async (req, res) => {
   const conditions = { is_deleted: false };
   const orderBy = "publish_date DESC";
   try {
-    const result = await knex.select(columns).from(table).where(conditions).orderBy("publish_date", "DESC");
+    const result = await knex
+      .select(columns)
+      .from(table)
+      .where(conditions)
+      .orderBy("publish_date", "DESC");
     if (result.length === 0) {
       return res
         .status(404)
@@ -337,8 +339,10 @@ router.get("/posts/:board_id", async (req, res) => {
     if (!board_id) {
       return res.status(400).json(clientErrorResponse("게시물 ID가 없습니다."));
     }
-    
-    const incrementResult = await knex(table).increment('views',1).where('board_id',board_id);
+
+    const incrementResult = await knex(table)
+      .increment("views", 1)
+      .where("board_id", board_id);
 
     if (incrementResult === 0) {
       return res
@@ -347,7 +351,10 @@ router.get("/posts/:board_id", async (req, res) => {
     }
 
     // 게시물 상세 정보 조회
-    const post = await knex.select(columns).from(table).where("board_id",board_id);
+    const post = await knex
+      .select(columns)
+      .from(table)
+      .where("board_id", board_id);
 
     if (post.length === 0) {
       return res
@@ -461,7 +468,7 @@ router.patch("/posts", async (req, res) => {
   }
 
   try {
-    const result = await knex(table).update(data).where("board_id",board_id);
+    const result = await knex(table).update(data).where("board_id", board_id);
     if (result === 0) {
       return res
         .status(404)
@@ -563,7 +570,9 @@ router.delete("/posts", async (req, res) => {
     const data = { is_deleted: true };
     const conditions = { board_id: board_ids };
 
-    const result = await knex(table).update(data).whereIn("board_id",board_ids);
+    const result = await knex(table)
+      .update(data)
+      .whereIn("board_id", board_ids);
 
     if (result === 0) {
       return res
@@ -687,13 +696,10 @@ router.post("/comments", async (req, res) => {
   const conditions = { board_id, is_deleted: false };
   try {
     // 게시물이 존재하는지 확인
-    const articleExists = await knex
-      .select(columns)
-      .from(table)
-      .where({
-        board_id:board_id, 
-        is_deleted:false
-      });
+    const articleExists = await knex.select(columns).from(table).where({
+      board_id: board_id,
+      is_deleted: false,
+    });
 
     if (articleExists.length === 0) {
       return res
@@ -803,7 +809,11 @@ router.get("/comments/:board_id", async (req, res) => {
   const conditions = { board_id, is_deleted: false };
 
   try {
-    const result = await knex.select(columns).from(table).where(conditions).orderBy("publish_date","DESC");
+    const result = await knex
+      .select(columns)
+      .from(table)
+      .where(conditions)
+      .orderBy("publish_date", "DESC");
 
     // if (result.length === 0) {
     //   return res
@@ -915,13 +925,16 @@ router.patch("/comments", async (req, res) => {
   const conditions = { board_id };
 
   try {
-    const articleExists = await knex.select(columns).from(table).where("board_id",board_id);
+    const articleExists = await knex
+      .select(columns)
+      .from(table)
+      .where("board_id", board_id);
     if (articleExists.length === 0) {
       return res.status.json(
         dataNotFoundErrorResponse("해당 게시물이 존재하지 않습니다.")
       );
     }
-    const result = await knex(table).update(data).where("board_id",board_id);
+    const result = await knex(table).update(data).where("board_id", board_id);
     if (result === 0) {
       return res
         .status(404)

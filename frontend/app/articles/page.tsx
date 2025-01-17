@@ -31,13 +31,6 @@ export default async function BoardList() {
   };
 
   const boardList = await getBoardList();
-  //   useEffect(() => {
-  //     getBoardList(); // 1) 게시글 목록 조회 함수 호출
-  //   }, []);
-
-  // useEffect(() => {
-  //   console.log(boardList); // 상태가 변경될 때마다 로그 출력
-  // }, [boardList]);
 
   return (
     <>
