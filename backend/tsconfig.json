@@ -5,7 +5,7 @@
       "DOM",
     ],
     "allowJs": true,
-    "skipLibCheck": true,
+    "skipLibCheck": false,
     "esModuleInterop": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
@@ -16,8 +16,7 @@
     "typeRoots": ["./node_modules/@types", "./src/@types"],
     "types": ["express", "express-session", "node"],
     "paths": {
-      "*": ["node_modules/*", "types/*"],
-      "#src/*": ["src/*"]
+      "@src/*": ["src/*"]
     }
   },
   "include": [

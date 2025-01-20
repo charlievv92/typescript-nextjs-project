@@ -1,7 +1,7 @@
 import passport from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
 import bcrypt from 'bcryptjs';
-import knex from "#src/config/knex";
+import knex from "@src/config/knex";
 
 
 
@@ -43,12 +43,10 @@ passport.use(
   })
 
 );
-interface User {
-  email: string;
-}
+
+
 // 세션 직렬화
 passport.serializeUser((user, done) => {
-  const client = user;
   done(null, user.email); // 사용자 email만 세션에 저장됨
 });
 
