@@ -1,27 +1,28 @@
-require("dotenv").config({
+
+import dotenv from "dotenv";
+import express, { Request, Response, NextFunction } from "express";
+import session from "express-session";
+import RedisStore from "connect-redis";
+import redisClient from "#src/modules/redisClient.js";
+import { swaggerUI, swaggerDocs } from "#src/modules/swagger.js";
+import bodyParser from "body-parser";
+import cookieParser from "cookie-parser";
+import cors from "cors";
+import path from "path";
+import passport from "#src/config/passport";
+import authRouter from "#src/routes/authRouter.js";
+import boardRouter from "#src/routes/boardRouter.js";
+import http from "http";
+import { initializeSocket, getIO } from "#src/config/socket.js";
+
+dotenv.config({
   path:
     process.env.NODE_ENV === "production"
       ? ".env.production"
       : ".env.development",
-}); // .env파일 읽기
-const express = require("express");
-const session = require("express-session");
-const RedisStore = require("connect-redis").default;
-const redisClient = require("./modules/redisClient");
-const { swaggerUI, swaggerDocs } = require("./modules/swagger");
-const bodyParser = require("body-parser");
-const cookieParser = require("cookie-parser");
-const cors = require("cors");
-const db = require("./config/db");
+});
 const app = express();
-const path = require("path");
 const PORT = process.env.port || 8000;
-const passport = require("./config/passport");
-const authRouter = require("./routes/authRouter");
-const boardRouter = require("./routes/boardRouter");
-const http = require("http");
-const { initializeSocket, getIO } = require("./config/socket");
-const server = http.createServer(app);
 
 // 정적 파일 사용
 app.use(express.static(path.join(__dirname, "/public")));
@@ -46,7 +47,7 @@ app.use(cookieParser());
 // 로그인 세션 설정
 app.use(
   session({
-    store: new RedisStore({ client: redisClient, ttl: 3600 }), // Redis에 세션 저장 ttl은 세션만료시간(초) , disableTouch: true 하면 TTL갱신 비활성화. 혹은 쿠키도 같이 리프레쉬 할지 결정해야함
+    //store: new RedisStore({ client: redisClient, ttl: 3600 }), // Redis에 세션 저장 ttl은 세션만료시간(초) , disableTouch: true 하면 TTL갱신 비활성화. 혹은 쿠키도 같이 리프레쉬 할지 결정해야함
     secret: process.env.SESSION_SECRET || "default-secret",
     resave: false, // 변경되지 않은 세션은 저장하지 않음
     saveUninitialized: false, // 초기화되지 않은 세션은 저장하지 않음
@@ -58,9 +59,9 @@ app.use(
     },
   })
 );
-
+/*
 //세션이나 쿠키가 존재 할경우 요청이 있을때 쿠키 지속시간을 갱신합니다.
-app.use((req, res, next) => {
+app.use((req: Request, res: Response, next: NextFunction) => {
   console.log(`[${req.method}] ${req.originalUrl}`);
   console.log(process.env.CLIENT_APP_URL);
   const io = getIO();
@@ -80,7 +81,6 @@ app.use((req, res, next) => {
       console.log("쿠키 만료 시간이 갱신되었습니다.");
     } else {
       // 세션이 없는 경우 처리
-
       console.log("세션이없음(비로그인)");
       if (!req.cookies["connect.sid"]) {
         io.emit("session-expired");
@@ -91,7 +91,7 @@ app.use((req, res, next) => {
 
   next();
 });
-
+*/
 // Passport 초기화
 app.use(passport.initialize());
 app.use(passport.session()); // Passport 세션 연결
@@ -100,15 +100,21 @@ app.use(passport.session()); // Passport 세션 연결
 app.use("/api/auth", authRouter);
 app.use("/api/board", boardRouter);
 
-app.get("/", (req, res) => {
+app.get("/", (req: Request, res: Response) => {
+  /*
   const sqlQuery = "INSERT INTO requested (rowno) VALUES (1)";
-  db.query(sqlQuery, (err, result) => {
+  db.query(sqlQuery, (err: Error, result: any) => {
     res.send("Success!!");
   });
+  */
   console.log("Request received");
 });
 
+// 서버 실행
+const server = http.createServer(app);
+
 initializeSocket(server);
+
 server.listen(PORT, () => {
   console.log(`running on port ${PORT}`);
   // 서버 실행 후 명세서를 확인할 수 있는 URL

@@ -1,7 +1,9 @@
-const passport = require('passport');
-const LocalStrategy = require('passport-local').Strategy;
-const bcrypt = require('bcryptjs');
-const knex = require("../config/knex");
+import passport from 'passport';
+import { Strategy as LocalStrategy } from 'passport-local';
+import bcrypt from 'bcryptjs';
+import knex from "#src/config/knex";
+
+
 
 
 // Passport LocalStrategy 설정
@@ -41,14 +43,17 @@ passport.use(
   })
 
 );
-
+interface User {
+  email: string;
+}
 // 세션 직렬화
 passport.serializeUser((user, done) => {
+  const client = user;
   done(null, user.email); // 사용자 email만 세션에 저장됨
 });
 
 // 세션 역직렬화
-passport.deserializeUser(async (email, done) => {
+passport.deserializeUser(async (email:string, done) => {
   try {
     const result = await knex.select('*').from('user').where('email', email);
     
@@ -62,4 +67,4 @@ passport.deserializeUser(async (email, done) => {
   }
 });
 
-module.exports = passport;
+export default passport;

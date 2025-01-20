@@ -13,8 +13,11 @@
     "outDir": "./dist", // 컴파일된 파일 출력 디렉토리
     "rootDir": "./", // 소스 파일의 루트 디렉토리
     "baseUrl": "./", // 모듈 해석의 기본 경로
+    "typeRoots": ["./node_modules/@types", "./src/@types"],
+    "types": ["express", "express-session", "node"],
     "paths": {
-      "*": ["node_modules/*", "types/*"]
+      "*": ["node_modules/*", "types/*"],
+      "#src/*": ["src/*"]
     }
   },
   "include": [
