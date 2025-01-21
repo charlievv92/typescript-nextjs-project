@@ -11,7 +11,7 @@ interface ICommentItem {
   is_deleted: number;
 }
 
-async function getArticleComments(board_id: string) {
+async function getArticleComments(board_id: string): Promise<ICommentItem[]> {
   const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL;
   try {
     const response = await axios.get(
@@ -22,6 +22,7 @@ async function getArticleComments(board_id: string) {
     return comments;
   } catch (error) {
     console.error("Error getting article details!!! ", error);
+    throw error;
   }
 }
 

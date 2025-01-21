@@ -27,6 +27,7 @@ import { useDialog } from "@/hooks/useDialog";
 import Link from "next/link";
 import ConfirmDialog from "@/components/ConfirmDialog";
 import ArticleComments from "@/components/ArticleComments";
+import ArticleDetails from "@/components/ArticleDetails";
 // import ConfirmDialog from "../auth/sign-up/Confirm";
 // import { useDialog } from "../auth/sign-up/useDialog";
 
@@ -106,20 +107,6 @@ export default async function ArticleDetailsPage({
     }
   };
 
-  const getArticleComments = async () => {
-    try {
-      console.log(serverUrl);
-
-      const response = await axios.get(
-        `${serverUrl}/api/board/comments/${board_id}`
-      );
-      console.log("Article comments : ", response.data);
-      return response.data.data;
-    } catch (error) {
-      console.error("Error getting article details!!! ", error);
-    }
-  };
-
   const handleModifyClick = () => {
     // if (user.email !== authorEmail) {
     //   alert("작성자만 수정할 수 있습니다.");
@@ -161,14 +148,14 @@ export default async function ArticleDetailsPage({
       });
       console.log("Post deleted!!! ", response.data);
       alert(response.data.message);
-      navigate("/articles");
+      router.push("/articles");
     }
   };
 
-  useEffect(() => {
-    getArticleDetails();
-    // getArticleComments();
-  }, []);
+  // useEffect(() => {
+  //   getArticleDetails();
+  //   // getArticleComments();
+  // }, []);
 
   useEffect(() => {
     if (contentsRef.current) {
@@ -183,73 +170,7 @@ export default async function ArticleDetailsPage({
   return (
     <>
       <Grid size={{ xs: 12, sm: 9 }}>
-        <Stack
-          direction={"row"}
-          justifyContent={"space-between"}
-          sx={{
-            borderBottom: `1px solid #ccc`,
-            // mb: 2,
-            pt: 3,
-            pb: 2,
-          }}
-        >
-          <Stack direction={"row"}>
-            <Typography component="h2" variant="h6" sx={{ pr: 1 }}>
-              제목 :
-            </Typography>
-            <Typography component="h2" variant="h5">
-              {title}
-            </Typography>
-          </Stack>
-          <Stack direction={"row"}>
-            <Typography component="h2" variant="h6" sx={{ pr: 1 }}>
-              작성자 :
-            </Typography>
-            <Typography component="h2" variant="h6">
-              {authorEmail}
-            </Typography>
-          </Stack>
-        </Stack>
-
-        <Box
-          ref={contentsRef}
-          sx={{
-            borderBottom: `1px solid #ccc`,
-            // borderRadius: "4px",
-            minHeight: "350px",
-            pb: 2,
-          }}
-        />
-
-        <Stack
-          direction="row"
-          justifyContent="flex-end"
-          sx={{
-            width: "100%",
-            pt: 2,
-            pb: 2,
-            borderBottom: `1px solid #ccc`,
-            // mt: 2,
-            // mb: 2,
-            // borderBottom: `1px solid #ccc`,
-            // padding: "10px",
-          }}
-          spacing={2}
-          // alignItems="center"
-        >
-          <Button component={Link} href={`http://localhost:3000/articles`}>
-            리스트
-          </Button>
-          {/* {!user || 권한 체크 필요
-            (user.email === authorEmail && (
-              <Button onClick={handleModifyClick}>수정</Button>
-            ))}
-          {!user ||
-            (user.email === authorEmail && (
-              // || (user.auth_code === "T0")
-              <Button onClick={handleDeleteClick}>삭제</Button>
-            ))} */}
-        </Stack>
+        <ArticleDetails board_id={board_id} />
         <ConfirmDialog
           open={isOpen}
           title="해당 게시물을 삭제하시겠어요?"
