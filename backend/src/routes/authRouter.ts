@@ -1,26 +1,20 @@
-const express = require("express");
-const knex = require("../config/knex");
-const router = express.Router();
-const passport = require("../config/passport");
-const bcrypt = require("bcryptjs");
+
+import { Router, Request, Response } from 'express';
+import knex from "@src/config/knex.js";
+import passport from "@src/config/passport";
+import bcrypt from "bcryptjs";
 const saltRounds = 10; // 해싱 라운드: 높을수록 보안 강하지만 속도 저하 있음
 
-const {
-  //db객체
-  queryAsync,
-  create,
-  read,
-  update,
-  remove,
-} = require("../utils/dbUtils");
-const {
+const router = Router();
+
+import {
   createResponse,
   successResponse,
   clientErrorResponse,
   dataNotFoundErrorResponse,
   serverErrorResponse,
-} = require("../utils/responseUtils");
-const e = require("express");
+} from "@src/utils/responseUtils";
+
 
 
 /**
@@ -116,7 +110,7 @@ const e = require("express");
  *       500:
  *         description: 서버 오류
  */
-router.get("/users-ad" , async (req, res) => {
+router.get("/users-ad" , async (req: Request, res: Response) => {
 
   //TODO: 어드민 관련 api사용시 권한 확인 추가할것
   try{
@@ -464,4 +458,4 @@ router.get("/status", (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;

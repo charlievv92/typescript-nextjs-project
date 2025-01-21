@@ -3,17 +3,17 @@ import dotenv from "dotenv";
 import express, { Request, Response, NextFunction } from "express";
 import session from "express-session";
 import RedisStore from "connect-redis";
-import redisClient from "#src/modules/redisClient.js";
-import { swaggerUI, swaggerDocs } from "#src/modules/swagger.js";
+import redisClient from "@src/modules/redisClient.js";
+import { swaggerUI, swaggerDocs } from "@src/modules/swagger.js";
 import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import path from "path";
-import passport from "#src/config/passport";
-import authRouter from "#src/routes/authRouter.js";
-import boardRouter from "#src/routes/boardRouter.js";
+import passport from "@src/config/passport";
+import authRouter from "@src/routes/authRouter.js";
+import boardRouter from "@src/routes/boardRouter.js";
 import http from "http";
-import { initializeSocket, getIO } from "#src/config/socket.js";
+import { initializeSocket, getIO } from "@src/config/socket.js";
 
 dotenv.config({
   path:
