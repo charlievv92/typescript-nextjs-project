@@ -1,16 +1,16 @@
 import * as React from "react";
 import axios from "axios";
 import Grid from "@mui/material/Grid2";
-import Box from "@mui/material/Box";
+// import Box from "@mui/material/Box";
 
-import Typography from "@mui/material/Typography";
+// import Typography from "@mui/material/Typography";
 
 import CustomizedDataGrid from "@components/CustomizedDataGrid";
 import { Button, Stack } from "@mui/material";
 import Link from "next/link";
 // import { useAuth } from "../auth/AuthContext";
 
-export default async function BoardList() {
+export default async function ArticleListPage() {
   // TODO: 게시물 검색 기능 및 페이지네이션 관련 기능 추가(20241121 kwc)
   // TODO: 공지사항 기능 추가 -> 1페이지에 게시물 총 15개 + @ 게시일 최신순으로 보이게(20241202 kwc)
   // TODO: 공지 게시물로 전환 버튼 추가(20241202 kwc)

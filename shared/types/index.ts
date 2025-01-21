@@ -113,7 +113,7 @@ export namespace DTO {
       readonly password: string;
       readonly name: string;
       readonly tel_number: string;
-      readonly;
+      // readonly;
     }
 
     export interface LoginRequest {
@@ -137,8 +137,28 @@ export namespace DTO {
         content: string;
       }
     }
+
     // export type CreateResponse = IPost;
     // export type GetPostResponse = IPost;
     // export type GetPostsResponse = IPaginatedResponse<IPost>;
+  }
+  export namespace Comment {
+    export interface CreateRequest {
+      comment: string;
+    }
+    export interface ICommentItem {
+      comment_id: number;
+      email: string;
+      comment: string;
+      ip_location: string;
+      publish_date: string;
+      is_deleted: number;
+    }
+  }
+}
+export namespace Props {
+  export interface IAlignItemsListProps {
+    items: DTO.Comment.ICommentItem[];
+    user: DTO.Auth.LoginResponse | null;
   }
 }
