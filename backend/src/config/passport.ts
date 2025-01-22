@@ -50,7 +50,7 @@ passport.use(
 );
 
 // 세션 직렬화
-passport.serializeUser((user, done) => {
+passport.serializeUser((user , done) => {
   done(null, user.email); // 사용자 email만 세션에 저장됨
 });
 

@@ -10,7 +10,7 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import path from "path";
 import passport from "@src/config/passport";
-import authRouter from "@src/routes/authRouter.js";
+import authRouter from "@src/routes/authRouter";
 import boardRouter from "@src/routes/boardRouter.js";
 import http from "http";
 import { initializeSocket, getIO } from "@src/config/socket.js";
