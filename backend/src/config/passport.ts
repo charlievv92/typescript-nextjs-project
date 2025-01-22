@@ -3,9 +3,6 @@ import { Strategy as LocalStrategy } from 'passport-local';
 import bcrypt from 'bcryptjs';
 import knex from "@src/config/knex";
 
-
-
-
 // Passport LocalStrategy 설정
 passport.use(
   new LocalStrategy({ usernameField: 'email' }, async (email, password, done) => {
@@ -46,7 +43,7 @@ passport.use(
 
 
 // 세션 직렬화
-passport.serializeUser((user, done) => {
+passport.serializeUser((user , done) => {
   done(null, user.email); // 사용자 email만 세션에 저장됨
 });
 
