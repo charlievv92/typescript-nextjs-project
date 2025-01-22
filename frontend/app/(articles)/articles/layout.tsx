@@ -1,4 +1,4 @@
-import ArticlesLayout from "@/components/ArticlesLayout";
+import ArticlesLayout from "@/components/layouts/ArticlesLayout";
 
 export default function ArticlesLayoutWrapper({
   children,

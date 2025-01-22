@@ -26,8 +26,8 @@ import { useRouter } from "next/navigation";
 import { useDialog } from "@/hooks/useDialog";
 import Link from "next/link";
 import ConfirmDialog from "@/components/ConfirmDialog";
-import ArticleComments from "@/components/ArticleComments";
-import ArticleDetails from "@/components/ArticleDetails";
+import ArticleComments from "@/components/article/ArticleComments";
+import ArticleDetails from "@/components/article/ArticleDetails";
 // import ConfirmDialog from "../auth/sign-up/Confirm";
 // import { useDialog } from "../auth/sign-up/useDialog";
 
@@ -35,14 +35,7 @@ interface ArticleDetailsPageProps {
   params: { board_id: string };
 }
 
-interface InitialData {
-  title: string;
-  contents: string;
-  authorEmail: string;
-  comments: Comment[];
-}
-
-export default async function ArticleDetailsPage({
+export default function ArticleDetailsPage({
   params: { board_id },
 }: ArticleDetailsPageProps) {
   // TODO: 게시물 삭제 기능 추가(20241202 kwc)
@@ -52,10 +45,7 @@ export default async function ArticleDetailsPage({
 
   //   const { user, clientIp } = useAuth();
 
-  const contentsRef = useRef(null);
   // const router = useRouter();
-
-  const { isOpen, openDialog, handleConfirm, handleCancel } = useDialog();
   // const customModules = {
   //   toolbar: {
   //     container: [
@@ -73,11 +63,14 @@ export default async function ArticleDetailsPage({
   // };
 
   // const customStyle = { height: "150px" };
-  const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL;
+  // const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL;
 
   //   useEffect(() => {
   //     setPageTitle("Board Details");
   //   }, [setPageTitle]);
+
+  const contentsRef = useRef(null);
+  const { isOpen, openDialog, handleConfirm, handleCancel } = useDialog();
 
   const handleModifyClick = () => {
     // if (user.email !== authorEmail) {

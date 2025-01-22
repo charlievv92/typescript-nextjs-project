@@ -1,6 +1,7 @@
 import { Box, Button, Stack, TextField, Typography } from "@mui/material";
 import axios from "axios";
-import ConfirmDialog from "./ConfirmDialog";
+import ConfirmDialog from "../ConfirmDialog";
+import { useRouter } from "next/navigation";
 
 interface IArticleDetails {
   title: string;
@@ -26,12 +27,22 @@ async function getArticleDetails(board_id: string) {
   }
 }
 
+const router = useRouter();
+
 export default async function ArticleDetails({
   board_id,
 }: {
   board_id: string;
 }) {
   const articleDetails = await getArticleDetails(board_id);
+
+  function handleModifyClick(board_id: string) {
+    // if (user.email !== authorEmail) {
+    //   alert("작성자만 수정할 수 있습니다.");
+    //   return;
+    // }
+    router.push(`/articles/modify/${board_id}`);
+  }
   return (
     <div>
       <Stack

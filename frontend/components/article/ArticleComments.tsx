@@ -1,5 +1,5 @@
 import { Box, Divider, Typography } from "@mui/material";
-import AlignItemsList from "./AlignItemsList";
+import AlignItemsList from "../AlignItemsList";
 import axios from "axios";
 
 interface ICommentItem {
