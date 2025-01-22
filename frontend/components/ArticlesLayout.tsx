@@ -23,7 +23,7 @@ const xThemeComponents = {
   ...treeViewCustomizations,
 };
 
-export default function ClientLayout({
+export default function ArticlesLayout({
   children,
 }: {
   children: React.ReactNode;

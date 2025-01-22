@@ -11,15 +11,15 @@ interface ICommentItem {
   is_deleted: number;
 }
 
-async function getArticleComments(board_id: string): Promise<ICommentItem[]> {
+async function getArticleComments(board_id: string) {
   const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL;
   try {
     const response = await axios.get(
       `${serverUrl}/api/board/comments/${board_id}`
     );
     console.log("Article comments : ", response.data);
-    const comments: ICommentItem[] = response.data.data;
-    return comments;
+    // const comments: ICommentItem[] = response.data.data;
+    return response.data.data;
   } catch (error) {
     console.error("Error getting article details!!! ", error);
     throw error;

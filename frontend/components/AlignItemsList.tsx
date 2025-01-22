@@ -27,8 +27,10 @@ interface IAlignItemsListProps {
   user?: IUser | null; // 테스트를 위해 옵셔널로 지정
 }
 
-export default function AlignItemsList({ items, user }: IAlignItemsListProps) {
+export default function AlignItemsList({ items }) {
   const filteredItems = items.filter((item) => item.is_deleted === 0);
+
+  console.log("filteredItems : ", filteredItems);
 
   return (
     <List
@@ -83,29 +85,29 @@ export default function AlignItemsList({ items, user }: IAlignItemsListProps) {
                 boxShadow: 1,
               }}
               secondaryAction={
-                user &&
-                user.email === item.email && (
-                  <Stack flexDirection="column">
-                    <IconButton
-                      edge="end"
-                      aria-label="modify"
-                      onClick={() => {
-                        alert(`${item.comment_id} is clicked`);
-                      }}
-                    >
-                      <EditIcon />
-                    </IconButton>
-                    <IconButton
-                      edge="end"
-                      aria-label="delete"
-                      onClick={() => {
-                        alert(`${item.comment_id} is clicked`);
-                      }}
-                    >
-                      <GridDeleteIcon />
-                    </IconButton>
-                  </Stack>
-                )
+                // user &&
+                // user.email === item.email && (
+                <Stack flexDirection="column">
+                  <IconButton
+                    edge="end"
+                    aria-label="modify"
+                    onClick={() => {
+                      alert(`${item.comment_id} is clicked`);
+                    }}
+                  >
+                    <EditIcon />
+                  </IconButton>
+                  <IconButton
+                    edge="end"
+                    aria-label="delete"
+                    onClick={() => {
+                      alert(`${item.comment_id} is clicked`);
+                    }}
+                  >
+                    <GridDeleteIcon />
+                  </IconButton>
+                </Stack>
+                // )
               }
             >
               <ListItemText

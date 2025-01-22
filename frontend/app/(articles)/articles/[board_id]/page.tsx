@@ -50,20 +50,11 @@ export default async function ArticleDetailsPage({
   // TODO: 게시물 수정 시 확인창 추가(20241202 kwc)
   // TODO: 게시물 삭제 버튼 권한에 따라 보이게 처리(20241202 kwc)
 
-  //   const { setPageTitle } = useOutletContext();
-  //   const [title, setTitle] = useState("");
-  //   const [contents, setContents] = useState("");
-  //   const [comment, setComment] = useState("");
-  //   const [comments, setComments] = useState([]);
-  //   const [authorEmail, setAuthorEmail] = useState("");
-
-  // const [article, setArticle] = useState({});
-  //   const [loading, setLoading] = useState(true); // 로딩 상태 추가
   //   const { user, clientIp } = useAuth();
 
   const contentsRef = useRef(null);
-  const router = useRouter();
-  //   const { board_id } = useParams();
+  // const router = useRouter();
+
   const { isOpen, openDialog, handleConfirm, handleCancel } = useDialog();
   // const customModules = {
   //   toolbar: {
@@ -87,25 +78,6 @@ export default async function ArticleDetailsPage({
   //   useEffect(() => {
   //     setPageTitle("Board Details");
   //   }, [setPageTitle]);
-
-  const getArticleDetails = async () => {
-    try {
-      console.log(serverUrl);
-
-      const response = await axios.get(
-        `${serverUrl}/api/board/posts/${board_id}`
-      );
-      console.log("Article details : ", response.data);
-      //   setTitle(response.data.data.title || "");
-      //   setContents(response.data.data.contents || "");
-      //   setAuthorEmail(response.data.data.email || "");
-
-      //   getArticleComments();
-      return response.data.data;
-    } catch (error) {
-      console.error("Error getting article details!!! ", error);
-    }
-  };
 
   const handleModifyClick = () => {
     // if (user.email !== authorEmail) {

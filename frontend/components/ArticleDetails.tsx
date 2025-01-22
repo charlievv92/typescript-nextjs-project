@@ -8,7 +8,7 @@ interface IArticleDetails {
   authorEmail: string;
 }
 
-async function getArticleDetails(board_id: string): Promise<IArticleDetails> {
+async function getArticleDetails(board_id: string) {
   const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL;
   try {
     console.log(serverUrl);
@@ -18,8 +18,8 @@ async function getArticleDetails(board_id: string): Promise<IArticleDetails> {
     );
     console.log("Article details : ", response.data);
 
-    const articleDetails: IArticleDetails = response.data.data;
-    return articleDetails;
+    // const articleDetails: IArticleDetails = response.data.data;
+    return response.data.data;
   } catch (error) {
     console.error("Error getting article details!!! ", error);
     throw error;
