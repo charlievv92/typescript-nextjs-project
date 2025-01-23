@@ -1,5 +1,5 @@
 import * as React from "react";
-import Avatar from "@mui/material/Avatar";
+// import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Divider from "@mui/material/Divider";
 import Drawer, { drawerClasses } from "@mui/material/Drawer";
@@ -45,12 +45,12 @@ export default function SideMenuMobile({
             direction="row"
             sx={{ gap: 1, alignItems: "center", flexGrow: 1, p: 1 }}
           >
-            <Avatar
+            {/* <Avatar
               sizes="small"
               alt="Riley Carter"
               src="/static/images/avatar/7.jpg"
               sx={{ width: 24, height: 24 }}
-            />
+            /> */}
             <Typography component="p" variant="h6">
               Riley Carter
             </Typography>

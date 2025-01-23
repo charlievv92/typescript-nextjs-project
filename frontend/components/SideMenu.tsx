@@ -1,7 +1,7 @@
 "use client";
 import * as React from "react";
 import { styled } from "@mui/material/styles";
-import Avatar from "@mui/material/Avatar";
+// import Avatar from "@mui/material/Avatar";
 import MuiDrawer, { drawerClasses } from "@mui/material/Drawer";
 import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
@@ -58,12 +58,12 @@ export default function SideMenu() {
           borderColor: "divider",
         }}
       >
-        <Avatar
+        {/* <Avatar
           sizes="small"
           alt="Riley Carter"
           src="/static/images/avatar/7.jpg"
           sx={{ width: 36, height: 36 }}
-        />
+        /> */}
         <Box sx={{ mr: "auto" }}>
           <Typography
             variant="body2"
