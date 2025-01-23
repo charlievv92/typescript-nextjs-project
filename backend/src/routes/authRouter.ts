@@ -1,11 +1,8 @@
 
-import { Router, Request, Response } from 'express';
+import { Router } from 'express';
 import knex from "@src/config/knex.js";
 import passport from "@src/config/passport";
 import bcrypt from "bcryptjs";
-const saltRounds = 10; // 해싱 라운드: 높을수록 보안 강하지만 속도 저하 있음
-
-const router = Router();
 
 import {
   createResponse,
@@ -15,6 +12,10 @@ import {
   serverErrorResponse,
 } from "@src/utils/responseUtils";
 
+import { ISessionUser } from '@src/models/passport-types'
+
+const saltRounds = 10; // bcrypt 암호 해싱 라운드: 높을수록 보안 강하지만 속도 저하 있음
+const router = Router();
 
 
 /**
@@ -110,7 +111,7 @@ import {
  *       500:
  *         description: 서버 오류
  */
-router.get("/users-ad" , async (req: Request, res: Response) => {
+router.get("/users-ad" , async (req, res) => {
 
   //TODO: 어드민 관련 api사용시 권한 확인 추가할것
   try{
@@ -121,9 +122,9 @@ router.get("/users-ad" , async (req: Request, res: Response) => {
       //.where('auth_code', '!=', 'SC');
     return res.json(successResponse(data));
   }catch(error){
+    console.error("Error executing query: ", error);
     return res.json(serverErrorResponse('서버 오류: 목록읽기 실패'));
   }
-
 });
 
 //TODO: patch로 수정
@@ -213,7 +214,7 @@ router.post("/login", (req, res, next) => {
     return res.json(clientErrorResponse('이미로그인되어있음'));
   }
 
-  passport.authenticate("local", (err, user, info) => {
+  passport.authenticate("local", (err:any, user:ISessionUser | null, info:any) => {
     if (err) {
       return res.json(serverErrorResponse('서버 오류: ' + err.message));
     }
@@ -230,9 +231,7 @@ router.post("/login", (req, res, next) => {
         user: 
           {
             email: user.email,
-            userName: user.user_name,
-            authCode: user.auth_code,
-        
+            authCode: user.is_deleted,
           }
       }
       res.json(successResponse(data, '로그인 성공'))
@@ -400,7 +399,7 @@ router.post("/signinUser", async (req, res) => {
 
     return res.json(successResponse('회원가입 성공'));
 
-  } catch (error) {
+  } catch (error:any) {
 
     if (error.code === 'ER_DUP_ENTRY') {
       return res.json(clientErrorResponse('이미 존재하는 이메일입니다.'));
@@ -416,7 +415,7 @@ router.post("/signinUser", async (req, res) => {
  * /api/auth/status:
  *   get:
  *     summary: 로그인 상태 확인
- *     description: 현재 로그인 상태를 반환합니다.
+ *     description: 현재 로그인 상태를 확인하고 사용자 정보를 반환합니다.
  *     tags:
  *        - Auth
  *     responses:
@@ -443,18 +442,17 @@ router.get("/status", (req, res) => {
   // Passport를 통해 인증(로그인)된 사용자인지 확인
   if (req.isAuthenticated()) {
     // 인증된 사용자 정보 반환
-    res.status(200).json({
-      user: {
-        email: req.user.email,
-        userName: req.user.user_name,
-        authCode: req.user.auth_code,
-      },
-    });
+    const user = req.user;
+
+    if (user.is_deleted) {
+      return res.json(successResponse(null, '계정이 정지되었습니다 관리자에 문의하세요'));
+    }
+
+    return res.json(successResponse(user,'로그인정보 반환'));
+    
   } else {
     // 인증되지 않은 상태
-    res.status(200).json({
-      user: null,
-    });
+    return res.json(successResponse(null,'로그인되어있지 않음'));
   }
 });
 

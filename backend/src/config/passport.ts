@@ -3,7 +3,7 @@ import { Strategy as LocalStrategy } from "passport-local";
 import bcrypt from "bcryptjs";
 import knex from "@src/config/knex";
 
-// Passport LocalStrategy 설정
+// Passport LocalStrategy 설정 로컬 로그인 검증
 passport.use(
   new LocalStrategy(
     { usernameField: "email" },
@@ -54,16 +54,19 @@ passport.serializeUser((user , done) => {
   done(null, user.email); // 사용자 email만 세션에 저장됨
 });
 
-// 세션 역직렬화
+// 세션 역직렬화 req.user로 사용 가능함,
 passport.deserializeUser(async (email: string, done) => {
   try {
-    const result = await knex.select("*").from("user").where("email", email);
+    const result = await knex.select("email", "user_name" , "auth_code" ,"is_deleted")
+                              .from("user")
+                              .where("email", email);
 
     if (result.length === 0) {
       return done(null, false); // 사용자가 존재하지 않으면 false 반환
     }
+    const user = result[0];
 
-    return done(null, result[0]); // 사용자 정보를 성공적으로 반환
+    return done(null, user); // 사용자 정보를 성공적으로 반환
   } catch (error) {
     return done(error); // 에러 발생 시 에러를 반환
   }

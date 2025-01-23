@@ -2,13 +2,6 @@ const express = require("express");
 const knex = require("../config/knex");
 const router = express.Router();
 const {
-  queryAsync,
-  create,
-  read,
-  update,
-  remove,
-} = require("../utils/dbUtils");
-const {
   createResponse,
   successResponse,
   clientErrorResponse,

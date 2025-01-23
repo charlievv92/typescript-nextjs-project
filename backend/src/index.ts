@@ -4,7 +4,7 @@ import express, { Request, Response, NextFunction } from "express";
 import session from "express-session";
 import RedisStore from "connect-redis";
 import redisClient from "@src/modules/redisClient.js";
-import { swaggerUI, swaggerDocs } from "@src/modules/swagger.js";
+import { swaggerUI, swaggerDocs } from "@src/modules/swagger";
 import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
 import cors from "cors";
@@ -16,11 +16,18 @@ import http from "http";
 import { initializeSocket, getIO } from "@src/config/socket.js";
 
 dotenv.config({
-  path:
-    process.env.NODE_ENV === "production"
-      ? ".env.production"
-      : ".env.development",
+  path: (() => {
+    switch (process.env.NODE_ENV) {
+      case "production":
+        return ".env.production";
+      case "development":
+        return ".env.development";
+      default:
+        return ".env"; // 기본값
+    }
+  })(),
 });
+
 const app = express();
 const PORT = process.env.port || 8000;
 

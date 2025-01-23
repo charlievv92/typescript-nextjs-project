@@ -1,5 +1,5 @@
-const swaggerJsDoc = require("swagger-jsdoc");
-const swaggerUI = require("swagger-ui-express");
+import swaggerJsDoc from "swagger-jsdoc";
+import swaggerUI from "swagger-ui-express";
 
 const swaggerOptions = {
   swaggerDefinition: {
@@ -15,9 +15,9 @@ const swaggerOptions = {
       },
     ],
   },
-  apis: ["./index.js", "./routes/authRouter.js", "./routes/boardRouter.js"], // 실제 API 경로 넣기
+  apis: ["src/routes/*"], // 실제 API 경로 넣기
 };
 
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
 
-module.exports = { swaggerUI, swaggerDocs };
+export { swaggerUI, swaggerDocs };
