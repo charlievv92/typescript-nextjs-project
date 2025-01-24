@@ -1,6 +1,6 @@
 
 import { Router } from 'express';
-import knex from "@src/config/knex.js";
+import knex from "@src/config/knex";
 import passport from "@src/config/passport";
 import bcrypt from "bcryptjs";
 

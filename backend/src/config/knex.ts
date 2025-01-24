@@ -1,5 +1,7 @@
 
-const knex = require('knex')({
+import knex from 'knex';
+
+const db = knex({
   client: 'mysql',
   connection: {
     host: process.env.DB_HOST,
@@ -9,4 +11,4 @@ const knex = require('knex')({
   }
 })
 
-module.exports = knex; 
+export = db;

@@ -1,5 +1,6 @@
 
 import dotenv from "dotenv";
+dotenv.config();
 import express, { Request, Response, NextFunction } from "express";
 import session from "express-session";
 import RedisStore from "connect-redis";
@@ -15,18 +16,6 @@ import boardRouter from "@src/routes/boardRouter.js";
 import http from "http";
 import { initializeSocket, getIO } from "@src/config/socket.js";
 
-dotenv.config({
-  path: (() => {
-    switch (process.env.NODE_ENV) {
-      case "production":
-        return ".env.production";
-      case "development":
-        return ".env.development";
-      default:
-        return ".env"; // 기본값
-    }
-  })(),
-});
 
 const app = express();
 const PORT = process.env.port || 8000;
