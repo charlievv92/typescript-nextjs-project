@@ -1,4 +1,5 @@
 import * as React from "react";
+import Grid from "@mui/material/Grid2";
 
 import ArticleComments from "@/components/article/ArticleComments";
 import ArticleDetails from "@/components/article/ArticleDetails";
@@ -38,11 +39,13 @@ export default function ArticleDetailsPage({ params: { board_id } }) {
 
   return (
     <>
-      {/* <Grid size={{ xs: 12, sm: 9 }}> */}
-      <ArticleDetails board_id={board_id} />
+      <Grid size={{ xs: 12, sm: 9 }}>
+        <React.Suspense fallback={<h1>Loading article details</h1>}>
+          <ArticleDetails board_id={board_id} />
+        </React.Suspense>
 
-      {/* 댓글 작성 기능 추가 예정 -> react-hook-form 도입 검토 필요(20250123 kwc) */}
-      {/* <Box
+        {/* 댓글 작성 기능 추가 예정 -> react-hook-form 도입 검토 필요(20250123 kwc) */}
+        {/* <Box
           sx={{
             // mb: 2,
             pt: 3,
@@ -87,10 +90,12 @@ export default function ArticleDetailsPage({ params: { board_id } }) {
         >
           <Button onClick={handleCommentSubmitClick}>작성</Button>
         </Stack> */}
-      {/* </Grid> */}
-      {/* <Grid size={{ xs: 12, sm: 3 }}> */}
-      <ArticleComments board_id={board_id} />
-      {/* </Grid> */}
+      </Grid>
+      <Grid size={{ xs: 12, sm: 3 }}>
+        <React.Suspense fallback={<h1>Loading article comments</h1>}>
+          <ArticleComments board_id={board_id} />
+        </React.Suspense>
+      </Grid>
     </>
   );
 }

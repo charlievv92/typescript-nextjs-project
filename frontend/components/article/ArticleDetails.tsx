@@ -38,7 +38,8 @@ export default async function ArticleDetails({
   const articleDetails = await getArticleDetails(board_id);
 
   return (
-    <Grid size={{ xs: 12, sm: 9 }}>
+    <>
+      {/* <Grid size={{ xs: 12, sm: 9 }}> */}
       <ArticleDetailsHeader
         title={articleDetails.title}
         authorEmail={articleDetails.authorEmail}
@@ -47,6 +48,7 @@ export default async function ArticleDetails({
       <ArticleDetailsContents contents={articleDetails.contents} />
 
       <ArticleDetailsFooter board_id={board_id} />
-    </Grid>
+      {/* // </Grid> */}
+    </>
   );
 }

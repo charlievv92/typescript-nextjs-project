@@ -35,7 +35,8 @@ export default async function ArticleComments({
   const comments = await getArticleComments(board_id);
 
   return (
-    <Grid size={{ xs: 12, sm: 3 }}>
+    // <Grid size={{ xs: 12, sm: 3 }}>
+    <>
       <Box
         sx={{
           padding: 3,
@@ -56,6 +57,7 @@ export default async function ArticleComments({
         <Divider />
         {comments && <AlignItemsList items={comments} />}
       </Box>
-    </Grid>
+      {/* </Grid> */}
+    </>
   );
 }
