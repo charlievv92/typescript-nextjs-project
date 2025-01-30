@@ -5,6 +5,7 @@ import ArticleDetailsContents from "./ArticleDetailsContents";
 
 import ArticleDetailsFooter from "./ArticleDetailsFooter";
 import Grid from "@mui/material/Grid2";
+import ArticleCommentWrite from "./ArticleCommentWrite";
 
 interface IArticleDetails {
   title: string;
@@ -46,6 +47,8 @@ export default async function ArticleDetails({
       />
 
       <ArticleDetailsContents contents={articleDetails.contents} />
+
+      <ArticleCommentWrite board_id={board_id} />
 
       <ArticleDetailsFooter board_id={board_id} />
       {/* // </Grid> */}

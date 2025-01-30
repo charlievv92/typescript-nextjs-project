@@ -25,7 +25,8 @@
       "@utils/*": ["./utils/*"],
       "@styles/*": ["./styles/*"],
       "@store/*": ["./store/*"],
-      "@internals/*": ["./internals/*"]
+      "@internals/*": ["./internals/*"],
+      "@apis/*": ["./apis/*"]
     },
     // MUI 관련 설정
     "noImplicitAny": true,
