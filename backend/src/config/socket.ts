@@ -1,9 +1,10 @@
-const { Server } = require("socket.io");
+import { Server } from 'socket.io';
+import { Server as HTTPServer } from 'http';
 
-let io;
-const userSocketMap = {};
+let io: Server;
+const userSocketMap: Record<string, string> = {};
 
-const initializeSocket = (server) => {
+const initializeSocket = (server: HTTPServer) => {
   io = new Server(server, {
     cors: {
       origin: "http://localhost:3000", // React 앱 주소
@@ -51,4 +52,4 @@ const getIO = () => {
   return io;
 };
 
-module.exports = { initializeSocket ,getIO };
+export { initializeSocket, getIO };

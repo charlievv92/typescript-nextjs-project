@@ -12,9 +12,9 @@ import cors from "cors";
 import path from "path";
 import passport from "@src/config/passport";
 import authRouter from "@src/routes/authRouter";
-import boardRouter from "@src/routes/boardRouter.js";
+import boardRouter from "@src/routes/boardRouter";
 import http from "http";
-import { initializeSocket, getIO } from "@src/config/socket.js";
+import { initializeSocket, getIO } from "@src/config/socket";
 
 
 const app = express();

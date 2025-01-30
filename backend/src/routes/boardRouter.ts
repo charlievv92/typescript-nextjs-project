@@ -1,14 +1,15 @@
-const express = require("express");
-const knex = require("../config/knex");
-const router = express.Router();
-const {
+import { Router } from 'express';
+import knex from '@src/config/knex'
+
+import {
   createResponse,
   successResponse,
   clientErrorResponse,
   dataNotFoundErrorResponse,
   serverErrorResponse,
-} = require("../utils/responseUtils");
-const upload = require("../config/multerConfig");
+} from "@src/utils/responseUtils";
+import upload from '@src/config/multerConfig'
+const router = Router();
 
 /**
  * @swagger
@@ -905,13 +906,13 @@ router.patch("/comments", async (req, res) => {
   if (!board_id) {
     return res.status(400).json(clientErrorResponse("게시물 ID가 없습니다."));
   }
-
+  /*
   if (!title || !contents) {
     return res
       .status(400)
       .json(clientErrorResponse("제목과 내용을 입력해야 합니다."));
   }
-
+  */
   let table = "comment";
   const columns = "*";
   const data = { comment, update_date: new Date() };
@@ -923,8 +924,8 @@ router.patch("/comments", async (req, res) => {
       .from(table)
       .where("board_id", board_id);
     if (articleExists.length === 0) {
-      return res.status.json(
-        dataNotFoundErrorResponse("해당 게시물이 존재하지 않습니다.")
+      return res.status(404)
+        .json(dataNotFoundErrorResponse("해당 게시물이 존재하지 않습니다.")
       );
     }
     const result = await knex(table).update(data).where("board_id", board_id);
@@ -965,4 +966,4 @@ router.post("/upload-image", upload.single("image"), (req, res) => {
   });
 });
 
-module.exports = router;
+export default router;

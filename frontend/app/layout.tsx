@@ -4,6 +4,7 @@ import "./globals.css";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
 import * as React from "react";
 import { Providers } from "@/redux/provider";
+import { AuthProvider } from "@/components/auth/AuthContext";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -30,7 +31,11 @@ export default function RootLayout({
     <html lang="ko">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <Providers>
-          <AppRouterCacheProvider>{children}</AppRouterCacheProvider>
+          <AppRouterCacheProvider>
+          <AuthProvider>
+            {children}
+          </AuthProvider>
+          </AppRouterCacheProvider>
         </Providers>
       </body>
     </html>

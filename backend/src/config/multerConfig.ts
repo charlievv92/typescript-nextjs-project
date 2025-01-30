@@ -1,5 +1,5 @@
-const multer = require("multer");
-const path = require("path");
+import multer, { Multer, FileFilterCallback } from "multer";
+import path from "path";
 
 // 파일 저장 경로 및 파일명 설정
 const storage = multer.diskStorage({
@@ -16,7 +16,7 @@ const storage = multer.diskStorage({
 });
 
 // 파일 필터링 설정 (예: 이미지 파일만 허용)
-const fileFilter = (req, file, cb) => {
+const fileFilter = (req: any, file: any, cb: any) => {
   if (file.mimetype.startsWith("image/")) {
     cb(null, true);
   } else {
@@ -31,4 +31,4 @@ const upload = multer({
   limits: { fileSize: 1024 * 1024 * 10 }, // 파일 크기 제한 (10MB)
 });
 
-module.exports = upload;
+export default upload;
