@@ -4,7 +4,6 @@ import * as React from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Checkbox from "@mui/material/Checkbox";
-import CssBaseline from "@mui/material/CssBaseline";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Divider from "@mui/material/Divider";
 import FormLabel from "@mui/material/FormLabel";
@@ -17,7 +16,6 @@ import MuiCard from "@mui/material/Card";
 import { styled } from "@mui/material/styles";
 import ForgotPassword from "@components/auth/login/ForgotPassword";
 import { GoogleIcon, FacebookIcon, SitemarkIcon } from "@components/auth/login/CustomIcons";
-import AppTheme from "@components/shared-theme/AppTheme";
 import ColorModeSelect from "@components/shared-theme/ColorModeSelect";
 import { useAuth } from "@components/auth/AuthContext";
 import { connectSocket, initializeSocket } from "@components/auth/socket";
@@ -165,8 +163,7 @@ export default function SignIn(props:any) {
   };
 
   return (
-    <AppTheme>
-      <CssBaseline enableColorScheme />
+
       <SignInContainer direction="column" justifyContent="space-between">
         <ColorModeSelect
           sx={{ position: "fixed", top: "1rem", right: "1rem" }}
@@ -290,6 +287,6 @@ export default function SignIn(props:any) {
           </Box>
         </Card>
       </SignInContainer>
-    </AppTheme>
+   
   );
 }
