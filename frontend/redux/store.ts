@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
-import tokenReducer from "./redux";
+import tokenReducer from "@/stores/tokenSlice";
+import commentReducer from "@/stores/commentSlice";
 
 const store = configureStore({
   reducer: {
     token: tokenReducer,
+    comments: commentReducer,
   },
 });
 

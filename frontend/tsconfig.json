@@ -24,7 +24,7 @@
       "@hooks/*": ["./hooks/*"],
       "@utils/*": ["./utils/*"],
       "@styles/*": ["./styles/*"],
-      "@store/*": ["./store/*"],
+      "@stores/*": ["./stores/*"],
       "@internals/*": ["./internals/*"],
       "@apis/*": ["./apis/*"]
     },

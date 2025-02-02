@@ -40,7 +40,6 @@ export default async function ArticleDetails({
 
   return (
     <>
-      {/* <Grid size={{ xs: 12, sm: 9 }}> */}
       <ArticleDetailsHeader
         title={articleDetails.title}
         authorEmail={articleDetails.authorEmail}
@@ -51,7 +50,6 @@ export default async function ArticleDetails({
       <ArticleCommentWrite board_id={board_id} />
 
       <ArticleDetailsFooter board_id={board_id} />
-      {/* // </Grid> */}
     </>
   );
 }

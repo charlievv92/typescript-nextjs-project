@@ -36,7 +36,7 @@ export default function ArticleCommentWrite({
     });
     console.log("comment : ", data.comment);
     console.log("Post created!!! ", response.data);
-    // commentApi.getComments(board_id);
+    // commentApi.getComments(board_id); 댓글 목록 재조회하고 댓글 목록 컴포넌트 업데이트하도록 수정 필요
     // setComment("");
   };
 
