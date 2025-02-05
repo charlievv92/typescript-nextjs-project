@@ -17,9 +17,10 @@ export const commentApi = {
       const response = await axios.get(
         `${serverUrl}/api/board/comments/${board_id}`
       );
-      console.log("Article comments : ", response.data);
+      console.log("Article comments : ", response.data); //       Article comments :  { code: 200, data: [], message: '게시 물 댓글 조회 성공' }
+
       // const comments: ICommentItem[] = response.data.data;
-      return response.data.data;
+      return response.data;
     } catch (error) {
       console.error("Error getting article details!!! ", error);
       throw error;
@@ -41,8 +42,8 @@ export const commentApi = {
         writer: "aaa@aaa.com",
         ip_location: "0.0.0.0",
       });
-      console.log("comments : ", response.data);
-      return response.data.data;
+      console.log("createComment : ", response.data);
+      return response.data;
     } catch (error) {
       console.error("댓글 작성 실패:", error);
       throw error;

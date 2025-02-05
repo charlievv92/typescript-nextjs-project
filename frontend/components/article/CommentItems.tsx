@@ -1,3 +1,5 @@
+"use client";
+
 import * as React from "react";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -7,6 +9,9 @@ import { Box, IconButton } from "@mui/material";
 import { GridDeleteIcon } from "@mui/x-data-grid";
 import EditIcon from "@mui/icons-material/Edit";
 import { format } from "date-fns";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
+import { setInitialComments } from "@/stores/commentSlice";
 
 // 인터페이스 정의
 interface ICommentItem {
@@ -27,11 +32,19 @@ interface IAlignItemsListProps {
   user?: IUser | null; // 테스트를 위해 옵셔널로 지정
 }
 
-export default function AlignItemsList({ items }) {
-  const filteredItems = items.filter((item) => item.is_deleted === 0);
+export default function CommentItems({ initialComments, board_id }) {
+  const dispatch = useDispatch();
+  const { items, status, message } = useSelector(
+    (state: RootState) => state.comments
+  );
 
-  console.log("filteredItems : ", filteredItems);
+  // const filteredItems = items.filter((item) => item.is_deleted === 0);
 
+  React.useEffect(() => {
+    dispatch(setInitialComments(initialComments));
+  }, [dispatch, initialComments]);
+
+  console.log("comments : ", items);
   return (
     <List
       sx={{
@@ -41,7 +54,7 @@ export default function AlignItemsList({ items }) {
         height: "90%",
       }}
     >
-      {filteredItems.length === 0 && (
+      {!items && (
         <ListItem
           alignItems="center"
           sx={{
@@ -72,8 +85,8 @@ export default function AlignItemsList({ items }) {
           </Box>
         </ListItem>
       )}
-      {filteredItems.length > 0 &&
-        filteredItems.map((item) => (
+      {items &&
+        items.map((item) => (
           <React.Fragment key={item.comment_id}>
             <ListItem
               alignItems="flex-start"

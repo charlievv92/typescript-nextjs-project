@@ -4,6 +4,10 @@ import { useForm, useController, UseControllerProps } from "react-hook-form";
 import { Box, Button, Stack, TextField, Typography } from "@mui/material";
 import CustomizedTextField from "../CustomizedTextField";
 import { commentApi } from "@/apis/comments";
+import { useDispatch } from "react-redux";
+import { useState } from "react";
+import { createComment, fetchComments } from "@/stores/commentSlice";
+import { AppDispatch } from "@/redux/store";
 
 // 댓글 작성 컴포넌트 추후에 수정 필요
 export default function ArticleCommentWrite({
@@ -17,6 +21,8 @@ export default function ArticleCommentWrite({
     formState: { errors },
   } = useForm();
 
+  const dispatch = useDispatch<AppDispatch>();
+  const [comment, setComment] = useState("");
   const handleCommentSubmitClick = async (data) => {
     // if (!user) {
     //   alert("로그인 후 댓글을 작성할 수 있습니다.");
@@ -30,14 +36,21 @@ export default function ArticleCommentWrite({
     //   comment: data.comment,
     //   // ip_location: clientIp,
     // });
-    const response = await commentApi.createComment({
-      board_id: board_id,
-      comment: data.comment,
-    });
-    console.log("comment : ", data.comment);
-    console.log("Post created!!! ", response.data);
+    // const response = await commentApi.createComment({
+    //   board_id: board_id,
+    //   comment: data.comment,
+    // });
+    // console.log("comment : ", data.comment);
+    // console.log("Post created!!! ", response.data);
     // commentApi.getComments(board_id); 댓글 목록 재조회하고 댓글 목록 컴포넌트 업데이트하도록 수정 필요
     // setComment("");
+    try {
+      await dispatch(createComment({ board_id, comment: data.comment }));
+      await dispatch(fetchComments(board_id));
+      setComment("");
+    } catch (error) {
+      console.error("댓글 작성 실패: ", error);
+    }
   };
 
   return (
@@ -65,6 +78,7 @@ export default function ArticleCommentWrite({
           textFieldProps={{
             id: "board-comment",
             variant: "standard",
+            value: comment,
             sx: {
               "& .MuiInputBase-root": {
                 border: "1px",
@@ -74,8 +88,6 @@ export default function ArticleCommentWrite({
               },
             },
           }}
-          // value={comment}
-          // onChange={(e) => setComment(e.target.value)}
         />
       </Box>
 

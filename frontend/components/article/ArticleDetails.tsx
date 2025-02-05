@@ -4,7 +4,6 @@ import ArticleDetailsHeader from "./ArticleDetailsHeader";
 import ArticleDetailsContents from "./ArticleDetailsContents";
 
 import ArticleDetailsFooter from "./ArticleDetailsFooter";
-import Grid from "@mui/material/Grid2";
 import ArticleCommentWrite from "./ArticleCommentWrite";
 
 interface IArticleDetails {
