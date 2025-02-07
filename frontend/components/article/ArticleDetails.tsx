@@ -46,9 +46,8 @@ export default async function ArticleDetails({
 
       <ArticleDetailsContents contents={articleDetails.contents} />
 
-      <ArticleCommentWrite board_id={board_id} />
-
       <ArticleDetailsFooter board_id={board_id} />
+      <ArticleCommentWrite board_id={board_id} />
     </>
   );
 }

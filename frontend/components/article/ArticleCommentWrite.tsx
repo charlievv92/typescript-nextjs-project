@@ -19,10 +19,12 @@ export default function ArticleCommentWrite({
     control,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm();
 
   const dispatch = useDispatch<AppDispatch>();
-  const [comment, setComment] = useState("");
+  // const [comment, setComment] = useState("");
+
   const handleCommentSubmitClick = async (data) => {
     // if (!user) {
     //   alert("로그인 후 댓글을 작성할 수 있습니다.");
@@ -47,7 +49,10 @@ export default function ArticleCommentWrite({
     try {
       await dispatch(createComment({ board_id, comment: data.comment }));
       await dispatch(fetchComments(board_id));
-      setComment("");
+
+      reset({
+        comment: "",
+      });
     } catch (error) {
       console.error("댓글 작성 실패: ", error);
     }
@@ -78,7 +83,7 @@ export default function ArticleCommentWrite({
           textFieldProps={{
             id: "board-comment",
             variant: "standard",
-            value: comment,
+            // value: comment,
             sx: {
               "& .MuiInputBase-root": {
                 border: "1px",

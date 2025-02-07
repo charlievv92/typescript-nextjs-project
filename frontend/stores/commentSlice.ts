@@ -7,8 +7,8 @@ export const createComment = createAsyncThunk(
   async ({ board_id, comment }: { board_id: string; comment: string }) => {
     try {
       const response = await commentApi.createComment({ board_id, comment });
-      await fetchComments(board_id);
-      return response.data;
+
+      return response;
     } catch (error) {
       throw error;
     }
@@ -21,8 +21,8 @@ export const fetchComments = createAsyncThunk(
   async (board_id: string) => {
     try {
       const comments = await commentApi.getComments(board_id);
-      console.log("fetchComments : ", comments);
-      return comments.data; // response.data.data는 이미 commentApi에서 처리됨
+
+      return comments; // response.data.data는 이미 commentApi에서 처리됨
     } catch (error) {
       throw error; // 에러 처리도 그대로 사용
     }
@@ -38,9 +38,9 @@ const commentSlice = createSlice({
   },
 
   reducers: {
-    setInitialComments: (state, action) => {
-      state.items = action.payload.data;
-    },
+    // setInitialComments: (state, action) => {
+    //   state.items = action.payload.data;
+    // },
   },
   extraReducers: (builder) => {
     builder
@@ -76,5 +76,5 @@ const commentSlice = createSlice({
   },
 });
 
-export const { setInitialComments } = commentSlice.actions;
+// export const { setInitialComments } = commentSlice.actions;
 export default commentSlice.reducer;

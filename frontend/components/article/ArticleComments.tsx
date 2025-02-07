@@ -1,4 +1,3 @@
-import { Suspense } from "react";
 import { Box, Divider, Typography } from "@mui/material";
 import CommentItems from "./CommentItems";
 import { commentApi } from "@apis/comments";
@@ -32,7 +31,7 @@ export default async function ArticleComments({
 }: {
   board_id: string;
 }) {
-  const initialComments = await commentApi.getComments(board_id);
+  // const initialComments = await commentApi.getComments(board_id);
 
   return (
     // <Grid size={{ xs: 12, sm: 3 }}>
@@ -56,7 +55,7 @@ export default async function ArticleComments({
         </Typography>
         <Divider />
 
-        <CommentItems initialComments={initialComments} board_id={board_id} />
+        <CommentItems board_id={board_id} />
       </Box>
       {/* </Grid> */}
     </>

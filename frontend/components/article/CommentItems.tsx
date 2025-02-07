@@ -5,13 +5,13 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import Typography from "@mui/material/Typography";
-import { Box, IconButton } from "@mui/material";
+import { Box, CircularProgress, IconButton } from "@mui/material";
 import { GridDeleteIcon } from "@mui/x-data-grid";
 import EditIcon from "@mui/icons-material/Edit";
 import { format } from "date-fns";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "@/redux/store";
-import { setInitialComments } from "@/stores/commentSlice";
+import { AppDispatch, RootState } from "@/redux/store";
+import { fetchComments, setInitialComments } from "@/stores/commentSlice";
 
 // 인터페이스 정의
 interface ICommentItem {
@@ -32,8 +32,8 @@ interface IAlignItemsListProps {
   user?: IUser | null; // 테스트를 위해 옵셔널로 지정
 }
 
-export default function CommentItems({ initialComments, board_id }) {
-  const dispatch = useDispatch();
+export default function CommentItems({ board_id }) {
+  const dispatch = useDispatch<AppDispatch>();
   const { items, status, message } = useSelector(
     (state: RootState) => state.comments
   );
@@ -41,8 +41,18 @@ export default function CommentItems({ initialComments, board_id }) {
   // const filteredItems = items.filter((item) => item.is_deleted === 0);
 
   React.useEffect(() => {
-    dispatch(setInitialComments(initialComments));
-  }, [dispatch, initialComments]);
+    if (status === "idle") {
+      dispatch(fetchComments(board_id));
+    }
+  }, [dispatch, status, board_id]);
+
+  if (status === "loading") {
+    return <CircularProgress />;
+  }
+
+  if (status === "failed") {
+    return <div>Error: {message}</div>;
+  }
 
   console.log("comments : ", items);
   return (
@@ -54,7 +64,7 @@ export default function CommentItems({ initialComments, board_id }) {
         height: "90%",
       }}
     >
-      {!items && (
+      {/* {items?.length === 0 && (
         <ListItem
           alignItems="center"
           sx={{
@@ -84,8 +94,8 @@ export default function CommentItems({ initialComments, board_id }) {
             </Typography>
           </Box>
         </ListItem>
-      )}
-      {items &&
+      )} */}
+      {items?.length > 0 ? (
         items.map((item) => (
           <React.Fragment key={item.comment_id}>
             <ListItem
@@ -191,7 +201,38 @@ export default function CommentItems({ initialComments, board_id }) {
               />
             </ListItem>
           </React.Fragment>
-        ))}
+        ))
+      ) : (
+        <ListItem
+          alignItems="center"
+          sx={{
+            mb: 2,
+            width: "100%",
+            height: "100%",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Box
+            sx={{
+              width: "100%",
+              textAlign: "center",
+            }}
+          >
+            <Typography
+              component="span"
+              variant="body2"
+              sx={{
+                color: "text.primary",
+                display: "inline",
+              }}
+            >
+              댓글이 없습니다.
+            </Typography>
+          </Box>
+        </ListItem>
+      )}
     </List>
   );
 }
