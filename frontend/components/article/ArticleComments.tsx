@@ -1,6 +1,5 @@
 import { Box, Divider, Typography } from "@mui/material";
 import CommentItems from "./CommentItems";
-import { commentApi } from "@apis/comments";
 
 interface ICommentItem {
   comment_id: number;
@@ -11,28 +10,11 @@ interface ICommentItem {
   is_deleted: number;
 }
 
-// async function getArticleComments(board_id: string) {
-//   const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL;
-//   try {
-//     const response = await axios.get(
-//       `${serverUrl}/api/board/comments/${board_id}`
-//     );
-//     console.log("Article comments : ", response.data);
-//     // const comments: ICommentItem[] = response.data.data;
-//     return response.data.data;
-//   } catch (error) {
-//     console.error("Error getting article details!!! ", error);
-//     throw error;
-//   }
-// }
-
 export default async function ArticleComments({
   board_id,
 }: {
   board_id: string;
 }) {
-  // const initialComments = await commentApi.getComments(board_id);
-
   return (
     // <Grid size={{ xs: 12, sm: 3 }}>
     <>

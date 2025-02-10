@@ -1,13 +1,10 @@
 import * as React from "react";
-import axios from "axios";
-import Grid from "@mui/material/Grid2";
 // import Box from "@mui/material/Box";
 
 // import Typography from "@mui/material/Typography";
 
-import CustomizedDataGrid from "@components/CustomizedDataGrid";
-import { Button, Stack } from "@mui/material";
-import Link from "next/link";
+import ArticleListHeader from "@/components/article/ArticleListHeader";
+import ArticleListContents from "@/components/article/ArticleListContents";
 // import { useAuth } from "../auth/AuthContext";
 export const dynamic = "force-dynamic"; // 모든 요청마다 새로 렌더링(트래픽이 많은 경우 캐싱 전략을 고려할 필요가 있음)
 
@@ -24,36 +21,10 @@ export default async function ArticleListPage() {
   //     setPageTitle("Board List");
   //   }, [setPageTitle]);
 
-  const getBoardList = async () => {
-    const response = await axios.get("http://localhost:8000/api/board/posts"); // 2) 게시글 목록 데이터에 할당
-    // setBoardList(response.data.data); // 3) boardList 변수에 할당
-    console.log(response.data);
-    return response.data.data;
-  };
-
-  const boardList = await getBoardList();
-
   return (
     <>
-      <Stack
-        direction="column"
-        sx={{
-          width: "100%",
-          mt: 4,
-          justifyContent: "center",
-          alignItems: "flex-end",
-        }}
-        spacing={2}
-      >
-        <Button component={Link} href={"/articles/write"}>
-          게시물 작성
-        </Button>
-        {/* {user && user.auth_code === "A0" && <Button onClick={}>삭제</Button>} */}
-        {/* <Button disabled>Disabled</Button> */}
-      </Stack>
-      <Grid size={{ xs: 12, sm: 12 }}>
-        <CustomizedDataGrid rows={boardList} />
-      </Grid>
+      <ArticleListHeader />
+      <ArticleListContents />
     </>
   );
 }
