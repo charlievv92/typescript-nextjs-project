@@ -4,10 +4,14 @@ import * as React from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import { columns } from "@internals/data/gridData";
 import { useRouter } from "next/navigation";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "@/redux/store";
 
-export default function CustomizedDataGrid({ rows }) {
+export default function CustomizedDataGrid({ initialRows }) {
   const router = useRouter();
   // const filteredRows = rows.filter((row) => row.is_deleted === 0);
+
+  const dispatch = useDispatch<AppDispatch>();
 
   const handleRowClick = (params) => {
     console.log(params.row);

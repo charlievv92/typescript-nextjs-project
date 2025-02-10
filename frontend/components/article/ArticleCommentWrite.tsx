@@ -26,26 +26,6 @@ export default function ArticleCommentWrite({
   // const [comment, setComment] = useState("");
 
   const handleCommentSubmitClick = async (data) => {
-    // if (!user) {
-    //   alert("로그인 후 댓글을 작성할 수 있습니다.");
-    //   router.push("/login");
-    //   return;
-    // }
-    // const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL;
-    // const response = await axios.post(`${serverUrl}/api/board/comments`, {
-    //   board_id: board_id,
-    //   // writer: user.email,
-    //   comment: data.comment,
-    //   // ip_location: clientIp,
-    // });
-    // const response = await commentApi.createComment({
-    //   board_id: board_id,
-    //   comment: data.comment,
-    // });
-    // console.log("comment : ", data.comment);
-    // console.log("Post created!!! ", response.data);
-    // commentApi.getComments(board_id); 댓글 목록 재조회하고 댓글 목록 컴포넌트 업데이트하도록 수정 필요
-    // setComment("");
     try {
       await dispatch(createComment({ board_id, comment: data.comment }));
       await dispatch(fetchComments(board_id));
@@ -83,7 +63,6 @@ export default function ArticleCommentWrite({
           textFieldProps={{
             id: "board-comment",
             variant: "standard",
-            // value: comment,
             sx: {
               "& .MuiInputBase-root": {
                 border: "1px",
@@ -104,13 +83,8 @@ export default function ArticleCommentWrite({
           pt: 2,
           pb: 2,
           borderBottom: `1px solid #ccc`,
-          // mt: 2,
-          // mb: 2,
-          // borderBottom: `1px solid #ccc`,
-          // padding: "10px",
         }}
         spacing={2}
-        // alignItems="center"
       >
         <Button type="submit">작성</Button>
       </Stack>

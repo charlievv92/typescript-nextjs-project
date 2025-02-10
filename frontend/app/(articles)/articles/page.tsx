@@ -13,7 +13,7 @@ export default async function ArticleListPage() {
   // TODO: 공지사항 기능 추가 -> 1페이지에 게시물 총 15개 + @ 게시일 최신순으로 보이게(20241202 kwc)
   // TODO: 공지 게시물로 전환 버튼 추가(20241202 kwc)
   // TODO: 공지 게시물은 공지 배열에 날짜 순으로 추가(20241202 kwc)
-  //   const { setPageTitle } = useOutletContext();
+
   //   const [boardList, setBoardList] = useState([]);
   //   const { user, clientIp } = useAuth();
 

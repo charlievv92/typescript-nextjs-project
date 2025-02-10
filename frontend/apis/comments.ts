@@ -8,11 +8,11 @@ interface Comment {
   created_at: string;
   // 필요한 다른 필드들 추가
 }
+const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL;
 
 export const commentApi = {
   // 댓글 목록 조회
   getComments: async (board_id: string) => {
-    const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL;
     try {
       const response = await axios.get(
         `${serverUrl}/api/board/comments/${board_id}`
@@ -34,10 +34,10 @@ export const commentApi = {
     writer?: string;
     ip_location?: string;
   }) => {
-    const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL;
     try {
       const response = await axios.post(`${serverUrl}/api/board/comments`, {
         board_id: data.board_id,
+
         comment: data.comment,
         writer: "aaa@aaa.com",
         ip_location: "0.0.0.0",

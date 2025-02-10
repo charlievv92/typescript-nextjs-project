@@ -32,7 +32,7 @@ interface IAlignItemsListProps {
   user?: IUser | null; // 테스트를 위해 옵셔널로 지정
 }
 
-export default function CommentItems({ board_id }) {
+export default function CommentItems({ board_id }: { board_id: string }) {
   const dispatch = useDispatch<AppDispatch>();
   const { items, status, message } = useSelector(
     (state: RootState) => state.comments
@@ -41,10 +41,8 @@ export default function CommentItems({ board_id }) {
   // const filteredItems = items.filter((item) => item.is_deleted === 0);
 
   React.useEffect(() => {
-    if (status === "idle") {
-      dispatch(fetchComments(board_id));
-    }
-  }, [dispatch, status, board_id]);
+    dispatch(fetchComments(board_id));
+  }, [dispatch, board_id]);
 
   if (status === "loading") {
     return <CircularProgress />;
