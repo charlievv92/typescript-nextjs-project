@@ -6,7 +6,7 @@ import * as React from "react";
 import ArticleListHeader from "@/components/article/ArticleListHeader";
 import ArticleListContents from "@/components/article/ArticleListContents";
 // import { useAuth } from "../auth/AuthContext";
-export const dynamic = "force-dynamic"; // 모든 요청마다 새로 렌더링(트래픽이 많은 경우 캐싱 전략을 고려할 필요가 있음)
+// export const dynamic = "force-dynamic"; // 모든 요청마다 새로 렌더링(트래픽이 많은 경우 캐싱 전략을 고려할 필요가 있음)
 
 export default async function ArticleListPage() {
   // TODO: 게시물 검색 기능 및 페이지네이션 관련 기능 추가(20241121 kwc)

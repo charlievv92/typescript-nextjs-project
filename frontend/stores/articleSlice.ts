@@ -52,7 +52,11 @@ const articleSlice = createSlice({
     message: "",
   },
 
-  reducers: {},
+  reducers: {
+    setRows: (state, action) => {
+      state.rows = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchArticles.pending, (state) => {
@@ -101,4 +105,5 @@ const articleSlice = createSlice({
   },
 });
 
+export const { setRows } = articleSlice.actions;
 export default articleSlice.reducer;

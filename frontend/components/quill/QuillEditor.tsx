@@ -5,6 +5,16 @@ import React, { useMemo, useRef } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import "./QuillEditor.css";
+import { Control, FieldValues, Path, useController } from "react-hook-form";
+import { Box } from "@mui/material";
+
+interface QuillEditorProps<T extends FieldValues> {
+  name: Path<T>;
+  control: Control<T>;
+  rules?: object;
+  defaultValue?: string;
+  style?: React.CSSProperties;
+}
 
 const formats = [
   "font",
@@ -28,9 +38,25 @@ const formats = [
   "video",
 ];
 
-export default function QuillEditor({ html, setHtml, modules, style }) {
+export default function QuillEditor<T extends FieldValues>({
+  name,
+  control,
+  rules,
+  // defaultValue = '',
+  style,
+}: QuillEditorProps<T>) {
   const quillRef = useRef<ReactQuill>();
   const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL;
+
+  const {
+    field: { onChange, value },
+    fieldState: { error },
+  } = useController({
+    name,
+    control,
+    rules,
+    // defaultValue
+  });
 
   // 커스텀 이미지 핸들러
   const imageHandler = () => {
@@ -94,18 +120,34 @@ export default function QuillEditor({ html, setHtml, modules, style }) {
   }, []);
 
   return (
-    <ReactQuill
-      ref={(element) => {
-        if (element !== null) {
-          quillRef.current = element;
-        }
+    <Box
+      sx={{
+        // "& .ql-container": { minHeight: "300px" },
+        ...(error && {
+          "& .ql-container": {
+            border: "1px solid #d32f2f",
+          },
+        }),
       }}
-      theme="snow"
-      modules={modules || defaultModules}
-      formats={formats}
-      value={html}
-      onChange={setHtml}
-      style={style}
-    />
+    >
+      <ReactQuill
+        ref={(element) => {
+          if (element !== null) {
+            quillRef.current = element;
+          }
+        }}
+        theme="snow"
+        modules={defaultModules}
+        formats={formats}
+        value={value}
+        onChange={onChange}
+        style={style}
+      />
+      {/* {error && (
+        <Box sx={{ color: "#d32f2f", mt: 5.5, fontSize: "0.75rem" }}>
+          {error.message}
+        </Box>
+      )} */}
+    </Box>
   );
 }

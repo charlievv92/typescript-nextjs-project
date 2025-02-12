@@ -70,8 +70,6 @@ export default function ArticlesLayout({
               </Typography>
               <Grid container spacing={2} columns={12}>
                 {children}
-                {/* <BoardWrite /> */}
-                {/* <BoardList /> */}
               </Grid>
             </Box>
           </Stack>
