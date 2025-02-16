@@ -1,5 +1,5 @@
 import * as React from "react";
-
+import Grid from "@mui/material/Grid2";
 import ArticleWrite from "@/components/article/ArticleWrite";
 
 export default function ArticleWritePage() {
@@ -24,42 +24,9 @@ export default function ArticleWritePage() {
   //   }
   // }, [isLoggedIn, isEditMode, email, authorEmail, navigate, board_id]);
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     await axios
-  //       .get(`${process.env.REACT_APP_SERVER_URL}/api/board/posts/${board_id}`)
-  //       .then((response) => {
-  //         // data = response.data;
-  //         console.log("data : ", response.data);
-  //         setData(response.data.data[0]);
-  //         //  setTitle(data.title);
-  //         //  setContents(data.contents);
-  //         //  setAuthorEmail(data.email);
-  //         //  setIsEditMode(true);
-  //       })
-  //       .catch((error) => {
-  //         console.error("Error fetching data!!! ", error);
-  //         throw error;
-  //       });
-  //   };
-
-  //   const setData = async (data) => {
-  //     // const response = await fetchData();
-  //     setTitle(data.title);
-  //     setContents(data.contents);
-  //     setAuthorEmail(data.email);
-  //     setIsEditMode(true);
-  //   };
-
-  //   if (board_id !== undefined) {
-  //     fetchData();
-  //   }
-  // }, [board_id]);
-
-  // const handleContentsChange = (value) => {
-  //   setContents(value);
-  //   console.log("contents : ", contents);
-  // };
-
-  return <ArticleWrite />;
+  return (
+    <Grid size={{ xs: 12, sm: 12 }}>
+      <ArticleWrite />
+    </Grid>
+  );
 }

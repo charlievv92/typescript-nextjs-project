@@ -6,7 +6,7 @@ import QuillEditor from "../quill/QuillEditor";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import CustomizedTextField from "../CustomizedTextField";
-import Grid from "@mui/material/Grid2";
+// import Grid from "@mui/material/Grid2";
 
 interface ArticleFormData {
   title: string;
@@ -97,41 +97,40 @@ export default function ArticleWrite() {
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <Grid size={{ xs: 12, sm: 12 }}>
-          <Typography component="h2" variant="h6" sx={{ mt: 2, mb: 2 }}>
-            제목
-          </Typography>
-          <CustomizedTextField
-            // minRows={20}
-            name="title"
-            control={control}
-            rules={{ required: "제목을 입력해주세요." }}
-            textFieldProps={{
-              variant: "standard",
-              fullWidth: true,
-              sx: {
-                "& .MuiInputBase-root": {
-                  border: "1px",
-                  borderTopRightRadius: "none",
-                  borderTopLeftRadius: "none",
-                  boxShadow: "none",
-                },
+        <Typography component="h2" variant="h6" sx={{ mt: 2, mb: 2 }}>
+          제목
+        </Typography>
+        <CustomizedTextField
+          // minRows={20}
+          name="title"
+          control={control}
+          rules={{ required: "제목을 입력해주세요." }}
+          textFieldProps={{
+            variant: "standard",
+            fullWidth: true,
+            sx: {
+              "& .MuiInputBase-root": {
+                border: "1px",
+                borderTopRightRadius: "none",
+                borderTopLeftRadius: "none",
+                boxShadow: "none",
               },
-            }}
-          />
-          <Typography component="h2" variant="h6" sx={{ mt: 2, mb: 2 }}>
-            내용
-          </Typography>
-          <QuillEditor
-            // ref={quillRef}
-            name="contents"
-            control={control}
-            rules={{ required: "내용을 입력해주세요." }}
-            // modules={customModules}
-            // setHtml={handleContentsChange}
-            style={{ height: "500px" }}
-          />
-        </Grid>
+            },
+          }}
+        />
+        <Typography component="h2" variant="h6" sx={{ mt: 2, mb: 2 }}>
+          내용
+        </Typography>
+        <QuillEditor
+          // ref={quillRef}
+          name="contents"
+          control={control}
+          rules={{ required: "내용을 입력해주세요." }}
+          // modules={customModules}
+          // setHtml={handleContentsChange}
+          style={{ height: "500px" }}
+        />
+
         <Stack
           direction="row"
           sx={{ width: "100%", mt: 6, justifyContent: "flex-end" }}
